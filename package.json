@@ -1,0 +1,25 @@
+{
+  "name": "swc-plugin-transform-exports",
+  "version": "1.5.109",
+  "description": "SWC plugin for https://www.npmjs.com/package/babel-plugin-transform-imports but exports",
+  "main": "swc_plugin_transform_exports.wasm",
+  "scripts": {
+    "prepack": "cargo build --release --target wasm32-wasi && cp target/wasm32-wasi/release/swc_plugin_transform_exports.wasm ."
+  },
+  "homepage": "https://swc.rs",
+  "repository": {
+    "type": "git",
+    "url": "+https://github.com/Helloyunho/swc-plugin-transform-exports.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Helloyunho/swc-plugin-transform-exports/issues"
+  },
+  "author": {
+    "name": "Helloyunho",
+    "email": "me@helloyunho.xyz",
+    "url": "https://helloyunho.xyz"
+  },
+  "keywords": [],
+  "license": "Apache-2.0",
+  "preferUnplugged": true
+}
