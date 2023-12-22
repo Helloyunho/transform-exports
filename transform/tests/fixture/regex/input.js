@@ -1,3 +1,3 @@
-import { MyModule } from 'my-library';
-import { App } from 'my-library/components';
-import { Header, Footer } from 'my-library/components/App';
+export { MyModule } from 'my-library';
+export { App } from 'my-library/components';
+export { Header, Footer } from 'my-library/components/App';

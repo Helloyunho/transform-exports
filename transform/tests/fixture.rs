@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use modularize_imports::{modularize_imports, PackageConfig};
+use modularize_exports::{modularize_exports, PackageConfig};
 use swc_ecma_parser::{EsConfig, Syntax};
 use swc_ecma_transforms_testing::{test_fixture, FixtureTestConfig};
 use testing::fixture;
@@ -13,18 +13,18 @@ fn syntax() -> Syntax {
 }
 
 #[fixture("tests/fixture/**/input.js")]
-fn modularize_imports_fixture(input: PathBuf) {
+fn modularize_exports_fixture(input: PathBuf) {
     let output = input.parent().unwrap().join("output.js");
     test_fixture(
         syntax(),
         &|_tr| {
-            modularize_imports(modularize_imports::Config {
+            modularize_exports(modularize_exports::Config {
                 packages: vec![
                     (
                         "react-bootstrap".to_string(),
                         PackageConfig {
                             transform: "react-bootstrap/lib/{{member}}".into(),
-                            prevent_full_import: false,
+                            prevent_full_export: false,
                             skip_default_conversion: false,
                         },
                     ),
@@ -32,7 +32,7 @@ fn modularize_imports_fixture(input: PathBuf) {
                         "my-library/?(((\\w*)?/?)*)".to_string(),
                         PackageConfig {
                             transform: "my-library/{{ matches.[1] }}/{{member}}".into(),
-                            prevent_full_import: false,
+                            prevent_full_export: false,
                             skip_default_conversion: false,
                         },
                     ),
@@ -40,7 +40,7 @@ fn modularize_imports_fixture(input: PathBuf) {
                         "my-library-2".to_string(),
                         PackageConfig {
                             transform: "my-library-2/{{ camelCase member }}".into(),
-                            prevent_full_import: false,
+                            prevent_full_export: false,
                             skip_default_conversion: true,
                         },
                     ),
@@ -48,7 +48,7 @@ fn modularize_imports_fixture(input: PathBuf) {
                         "my-library-3".to_string(),
                         PackageConfig {
                             transform: "my-library-3/{{ kebabCase member }}".into(),
-                            prevent_full_import: false,
+                            prevent_full_export: false,
                             skip_default_conversion: true,
                         },
                     ),
@@ -74,7 +74,7 @@ fn modularize_imports_fixture(input: PathBuf) {
                                 ),
                             ])
                             .into(),
-                            prevent_full_import: false,
+                            prevent_full_export: false,
                             skip_default_conversion: true,
                         },
                     ),

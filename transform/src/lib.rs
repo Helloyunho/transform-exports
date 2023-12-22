@@ -74,17 +74,10 @@ impl<'a> Rewriter<'a> {
                         Plain(&'a str),
                         Array(&'a [&'a str]),
                     }
-                    let name_str = named_spec
-                        .exported
-                        .as_ref()
-                        .map(|x| match x {
-                            ModuleExportName::Ident(x) => x.as_ref(),
-                            ModuleExportName::Str(x) => x.value.as_ref(),
-                        })
-                        .unwrap_or_else(|| match named_spec.orig {
-                            ModuleExportName::Ident(ref x) => x.as_ref(),
-                            ModuleExportName::Str(ref x) => x.value.as_ref(),
-                        });
+                    let name_str = match &named_spec.orig {
+                        ModuleExportName::Ident(x) => x.as_ref(),
+                        ModuleExportName::Str(x) => x.value.as_ref(),
+                    };
 
                     let mut ctx: HashMap<&str, Data> = HashMap::new();
                     ctx.insert("matches", Data::Array(&self.group[..]));
@@ -165,7 +158,10 @@ impl<'a> Rewriter<'a> {
                     } else {
                         ExportSpecifier::Namespace(ExportNamespaceSpecifier {
                             span: named_spec.span,
-                            name: named_spec.orig.clone(),
+                            name: named_spec
+                                .exported
+                                .clone()
+                                .unwrap_or(named_spec.orig.clone()),
                         })
                     };
                     out.push(NamedExport {
